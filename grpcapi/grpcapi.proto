@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "github.com/alopez-suse/cosign-verification/grpcapi";
 
-package grpcapi;
+package share;
 
 service SignatureVerification {
   rpc VerifySignatures (VerifySignaturesRequest) returns (VerifySignaturesReply) {}

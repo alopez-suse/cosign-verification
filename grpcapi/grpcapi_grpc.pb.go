@@ -35,7 +35,7 @@ func NewSignatureVerificationClient(cc grpc.ClientConnInterface) SignatureVerifi
 
 func (c *signatureVerificationClient) VerifySignatures(ctx context.Context, in *VerifySignaturesRequest, opts ...grpc.CallOption) (*VerifySignaturesReply, error) {
 	out := new(VerifySignaturesReply)
-	err := c.cc.Invoke(ctx, "/grpcapi.SignatureVerification/VerifySignatures", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/share.SignatureVerification/VerifySignatures", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _SignatureVerification_VerifySignatures_Handler(srv interface{}, ctx contex
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpcapi.SignatureVerification/VerifySignatures",
+		FullMethod: "/share.SignatureVerification/VerifySignatures",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SignatureVerificationServer).VerifySignatures(ctx, req.(*VerifySignaturesRequest))
@@ -92,7 +92,7 @@ func _SignatureVerification_VerifySignatures_Handler(srv interface{}, ctx contex
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SignatureVerification_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpcapi.SignatureVerification",
+	ServiceName: "share.SignatureVerification",
 	HandlerType: (*SignatureVerificationServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
