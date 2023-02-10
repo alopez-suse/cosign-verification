@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// VerificationClient is the client API for Verification service.
+// SignatureVerificationClient is the client API for SignatureVerification service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type VerificationClient interface {
+type SignatureVerificationClient interface {
 	VerifySignatures(ctx context.Context, in *VerifySignaturesRequest, opts ...grpc.CallOption) (*VerifySignaturesReply, error)
 }
 
-type verificationClient struct {
+type signatureVerificationClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewVerificationClient(cc grpc.ClientConnInterface) VerificationClient {
-	return &verificationClient{cc}
+func NewSignatureVerificationClient(cc grpc.ClientConnInterface) SignatureVerificationClient {
+	return &signatureVerificationClient{cc}
 }
 
-func (c *verificationClient) VerifySignatures(ctx context.Context, in *VerifySignaturesRequest, opts ...grpc.CallOption) (*VerifySignaturesReply, error) {
+func (c *signatureVerificationClient) VerifySignatures(ctx context.Context, in *VerifySignaturesRequest, opts ...grpc.CallOption) (*VerifySignaturesReply, error) {
 	out := new(VerifySignaturesReply)
-	err := c.cc.Invoke(ctx, "/grpcapi.Verification/VerifySignatures", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpcapi.SignatureVerification/VerifySignatures", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// VerificationServer is the server API for Verification service.
-// All implementations must embed UnimplementedVerificationServer
+// SignatureVerificationServer is the server API for SignatureVerification service.
+// All implementations must embed UnimplementedSignatureVerificationServer
 // for forward compatibility
-type VerificationServer interface {
+type SignatureVerificationServer interface {
 	VerifySignatures(context.Context, *VerifySignaturesRequest) (*VerifySignaturesReply, error)
-	mustEmbedUnimplementedVerificationServer()
+	mustEmbedUnimplementedSignatureVerificationServer()
 }
 
-// UnimplementedVerificationServer must be embedded to have forward compatible implementations.
-type UnimplementedVerificationServer struct {
+// UnimplementedSignatureVerificationServer must be embedded to have forward compatible implementations.
+type UnimplementedSignatureVerificationServer struct {
 }
 
-func (UnimplementedVerificationServer) VerifySignatures(context.Context, *VerifySignaturesRequest) (*VerifySignaturesReply, error) {
+func (UnimplementedSignatureVerificationServer) VerifySignatures(context.Context, *VerifySignaturesRequest) (*VerifySignaturesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifySignatures not implemented")
 }
-func (UnimplementedVerificationServer) mustEmbedUnimplementedVerificationServer() {}
+func (UnimplementedSignatureVerificationServer) mustEmbedUnimplementedSignatureVerificationServer() {}
 
-// UnsafeVerificationServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to VerificationServer will
+// UnsafeSignatureVerificationServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SignatureVerificationServer will
 // result in compilation errors.
-type UnsafeVerificationServer interface {
-	mustEmbedUnimplementedVerificationServer()
+type UnsafeSignatureVerificationServer interface {
+	mustEmbedUnimplementedSignatureVerificationServer()
 }
 
-func RegisterVerificationServer(s grpc.ServiceRegistrar, srv VerificationServer) {
-	s.RegisterService(&Verification_ServiceDesc, srv)
+func RegisterSignatureVerificationServer(s grpc.ServiceRegistrar, srv SignatureVerificationServer) {
+	s.RegisterService(&SignatureVerification_ServiceDesc, srv)
 }
 
-func _Verification_VerifySignatures_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SignatureVerification_VerifySignatures_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VerifySignaturesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VerificationServer).VerifySignatures(ctx, in)
+		return srv.(SignatureVerificationServer).VerifySignatures(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpcapi.Verification/VerifySignatures",
+		FullMethod: "/grpcapi.SignatureVerification/VerifySignatures",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VerificationServer).VerifySignatures(ctx, req.(*VerifySignaturesRequest))
+		return srv.(SignatureVerificationServer).VerifySignatures(ctx, req.(*VerifySignaturesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Verification_ServiceDesc is the grpc.ServiceDesc for Verification service.
+// SignatureVerification_ServiceDesc is the grpc.ServiceDesc for SignatureVerification service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Verification_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpcapi.Verification",
-	HandlerType: (*VerificationServer)(nil),
+var SignatureVerification_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "grpcapi.SignatureVerification",
+	HandlerType: (*SignatureVerificationServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "VerifySignatures",
-			Handler:    _Verification_VerifySignatures_Handler,
+			Handler:    _SignatureVerification_VerifySignatures_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

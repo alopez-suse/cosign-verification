@@ -1,20 +1,18 @@
 syntax = "proto3";
 
-option go_package = "local-experiments/cosign-verification/grpcapi";
+option go_package = "github.com/alopez-suse/cosign-verification/grpcapi";
 
 package grpcapi;
 
-service Verification {
+service SignatureVerification {
   rpc VerifySignatures (VerifySignaturesRequest) returns (VerifySignaturesReply) {}
 }
 
-// The request message containing the user's name.
 message VerifySignaturesRequest {
   string imageReference = 1;
   string publicKey = 2;
 }
 
-// The response message containing the greetings
 message VerifySignaturesReply {
   bool signed = 1;
 }

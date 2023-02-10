@@ -29,7 +29,7 @@ func main() {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-	c := grpcapi.NewVerificationClient(conn)
+	c := grpcapi.NewSignatureVerificationClient(conn)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
