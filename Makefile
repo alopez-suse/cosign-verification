@@ -8,3 +8,7 @@ server:
 
 client:
 	go run ./cmd --ref=$(ref) --key=$(key)
+
+build:
+	env GOARCH=amd64 GOOS=linux go build .
+
