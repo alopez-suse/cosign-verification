@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "github.com/alopez-suse/cosign-verification/api";
+
+package api;
+
+service SignatureVerification {
+  rpc ImageSignatures (ImageSignaturesRequest) returns (ImageSignaturesReply) {}
+  rpc ImageSigned (ImageSignedRequest) returns (ImageSignedReply) {}
+}
+
+message Signature {
+  string Payload = 1;
+  string Base64Signature = 2;
+}
+
+message ImageSignaturesRequest {
+  string ImageReference = 1;
+}
+
+message ImageSignaturesReply {
+  repeated Signature Signatures = 1;
+}
+
+message ImageSignedRequest {
+  string ImageReference = 1;
+  repeated Signature Signatures = 2;
+  string PublicKey = 3;
+}
+
+message ImageSignedReply {
+  bool ImageSigned = 1;
+}
