@@ -25,7 +25,7 @@ func ImageSignatures(imageReference string) ([]Signature, error) {
 	}
 	signatureReferenceObj, err := ociremote.SignatureTag(imageReferenceObj)
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("could not create signature tag from given image reference: %s", err.Error())
 	}
 	cosignSignaturesWrapper, err := ociremote.Signatures(signatureReferenceObj)
 	if err != nil {
@@ -96,7 +96,7 @@ func verifiedSignatures(imageReference string, signatures []Signature, publicKey
 func signatureIsVerified(ctx context.Context, signature Signature, digestHash v1.Hash, checkOpts *cosign.CheckOpts) (bool, error) {
 	cosignSignature, err := static.NewSignature([]byte(signature.Payload), signature.Base64Signature)
 	if err != nil {
-		return false, err
+		return false, fmt.Errorf("could not generate cosign signature from given signature object: %s", err.Error())
 	}
 	_, err = cosign.VerifyImageSignature(ctx, cosignSignature, digestHash, checkOpts)
 	if err != nil {
