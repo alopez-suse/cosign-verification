@@ -44,17 +44,13 @@ func ImageSignatures() {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-
 	c := api.NewSignatureVerificationClient(conn)
-
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
-
 	r, err := c.ImageSignatures(ctx, &api.ImageSignaturesRequest{ImageReference: *imageReference})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-
 	signatures := r.GetSignatures()
 	if len(signatures) > 0 {
 		bytes, err := json.Marshal(signatures)
@@ -71,12 +67,9 @@ func ImageSigned() {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-
 	c := api.NewSignatureVerificationClient(conn)
-
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-
 	r, err := c.ImageSigned(ctx, &api.ImageSignedRequest{
 		ImageReference: *imageReference,
 		PublicKey:      keyFromPath(*keyPath),
@@ -85,7 +78,6 @@ func ImageSigned() {
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-
 	if r.GetImageSigned() {
 		log.Println("validated")
 	} else {
